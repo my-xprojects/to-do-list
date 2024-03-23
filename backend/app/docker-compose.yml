@@ -1,0 +1,25 @@
+version: "3.8"
+
+services:
+  app:
+    build: .
+    restart: always
+    container_name: myapp
+    depends_on:
+      - mysql
+    environment:
+      - SQLALCHEMY_DATABASE_URL=mysql+pymysql://dbuser:dbpassword@mysql:3306/dbname
+    ports:
+      - "8000:80"
+
+  mysql:
+    image: mysql:5.7
+    restart: always
+    container_name: mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: root_password
+      MYSQL_DATABASE: dbname
+      MYSQL_USER: dbuser
+      MYSQL_PASSWORD: dbpassword
+    ports:
+      - "3306:3306"
