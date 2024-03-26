@@ -2,8 +2,7 @@ name: Docker Compose Build and Deploy
 
 on:
   push:
-    branches:
-      - main
+  pull_request:
 
 jobs:
   build-and-deploy:
@@ -14,16 +13,6 @@ jobs:
 
       - name: Build Docker images
         run: docker-compose -f docker-compose.yml build
-
-      - name: Push Docker images
-        uses: docker/build-push-action@v2
-        with:
-          context: .
-          push: true
-          tags: username/repository:latest
-        env:
-          DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
-          DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
 
       - name: Deploy with Docker Compose
         run: docker-compose -f docker-compose.yml up -d
