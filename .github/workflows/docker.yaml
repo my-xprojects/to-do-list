@@ -2,8 +2,7 @@ name: Docker Compose Build and Deploy
 
 on:
   push:
-    branches:
-      - main
+  pull_request:
 
 jobs:
   build-and-deploy:
