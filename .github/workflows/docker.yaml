@@ -1,16 +1,21 @@
-name: Docker Build and Push
+name: Docker Compose Build and Deploy
 
 on:
   push:
-    branches:
-      - main
+  pull_request:
 
 jobs:
-  build:
+  build-and-deploy:
     runs-on: ubuntu-latest
+    env:
+      DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
+      DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
+
+      - name: Build Docker images
+        run: docker-compose -f docker-compose.yaml build
 
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v1
@@ -21,7 +26,7 @@ jobs:
           context: ./root/backend
           file: ./root/backend/Dockerfile
           push: true
-          tags: yourusername/backend-image:latest
+          tags: ${{ secrets.DOCKER_USERNAME }}/backend-image:latest
         env:
           DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
           DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
@@ -32,7 +37,10 @@ jobs:
           context: ./root/frontend
           file: ./root/frontend/Dockerfile
           push: true
-          tags: yourusername/frontend-image:latest
+          tags: ${{ secrets.DOCKER_USERNAME }}/frontend-image:latest
         env:
           DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
           DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
+          
+      - name: Deploy with Docker Compose
+        run: docker-compose -f docker-compose.yaml up -d
