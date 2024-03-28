@@ -11,7 +11,7 @@ RUN ls -al
 COPY requirements.txt /app/requirements.txt
 
 # Install any needed packages specified in requirements.txt
-RUN pip install --verbose -r requirements.txt
+RUN pip install --verbose --no-cache-dir -r requirements.txt
 
 # Expose port 80 to allow communication from outside the container
 EXPOSE 80
