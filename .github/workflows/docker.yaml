@@ -11,11 +11,11 @@ jobs:
       DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
       DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v2
+      # - name: Checkout code
+      #   uses: actions/checkout@v2
 
-      - name: Build Docker images
-        run: docker-compose -f docker-compose.yaml build
+      # - name: Build Docker images
+      #   run: docker-compose -f docker-compose.yaml build
 
       - name: Check Secrets
         run: |
@@ -64,5 +64,5 @@ jobs:
           tags: ${{ steps.frontend-meta.outputs.tags }}
           labels: ${{ steps.frontend-meta.outputs.labels }}
           
-      - name: Deploy with Docker Compose
-        run: docker-compose -f docker-compose.yaml up -d
+      # - name: Deploy with Docker Compose
+      #   run: docker-compose -f docker-compose.yaml up -d
