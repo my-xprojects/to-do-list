@@ -4,14 +4,15 @@ FROM python:3.8-slim
 # Set the working directory in the container
 WORKDIR /app
 
-# List contents of the directory for debugging purposes
-RUN ls -al
+# Copy the current directory contents into the container at /app
+COPY ./ /app
 
-# Copy requirements.txt separately to avoid caching issues
-COPY requirements.txt /app/requirements.txt
+RUN ls -ltr
+
+RUN pwd
 
 # Install any needed packages specified in requirements.txt
-RUN pip install --verbose --no-cache-dir -r requirements.txt
+RUN pip install --no-cache-dir -r requirements.txt
 
 # Expose port 80 to allow communication from outside the container
 EXPOSE 80
