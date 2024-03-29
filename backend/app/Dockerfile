@@ -6,6 +6,7 @@ FROM python:3.8-slim
 # Set the working directory in the container
 WORKDIR /app
 
+RUN echo ${SOURCE_DIR}
 # Copy the current directory contents into the container at /app
 COPY ${SOURCE_DIR} /app
 
