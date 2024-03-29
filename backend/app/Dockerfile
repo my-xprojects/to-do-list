@@ -1,4 +1,4 @@
-ARG SOURCE_DIR=.
+ARG SOURCE_DIR=./backend/app/
 
 # Use an official Python runtime as a parent image
 FROM python:3.8-slim
