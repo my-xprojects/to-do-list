@@ -25,11 +25,11 @@ jobs:
         uses: docker/build-push-action@v5
         with:
           context: .
+          build-args: |
+              SOURCE_DIR=./backend/app/
           file: ./backend/app/Dockerfile
           push: true
           tags: ${{ secrets.DOCKER_USERNAME }}/backend-image:latest
-          build-args: |
-              SOURCE_DIR=./backend/app/
           
       - name: Build and push frontend
         uses: docker/build-push-action@v5
