@@ -1,25 +1,19 @@
-# Use the official Node.js image as base
 FROM node:16-alpine
 
-# Set working directory in the container
+ARG SOURCE_DIR=.
+
 WORKDIR /app
 
 RUN ls -ltr
 
-# Copy package.json and package-lock.json into the container
-COPY ./frontend/package*.json ./
+COPY ${SOURCE_DIR}/package*.json ./
 
-# Install dependencies
 RUN npm install
 
-# Copy the React app into the container
-COPY ./frontend/ .
+COPY ${SOURCE_DIR} .
 
-# Build the React app
 RUN npm run build
 
-# Expose port 3000 to the outside world
 EXPOSE 3000
 
-# Command to run the React app
 CMD ["npm", "start"]
